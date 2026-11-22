@@ -82,47 +82,53 @@
 <section class="cartao bloco">
 	<div class="titulo"><h2>Coleta automática</h2></div>
 	<p>
-		Para atualizar todo dia sem abrir o sistema, agende <code>npm run coletar</code> (ex.: cron às 6h).
+		Atualiza as referências todo dia, mesmo com o sistema fechado. No Mac:
+		<code>npm run agendar</code> (6h por padrão; <code>npm run agendar -- 07:30</code> muda o
+		horário, <code>status</code> mostra se está ativo e <code>remover</code> desliga).
 	</p>
 </section>
 
 <style>
 	.topo {
-		margin-bottom: 1.5rem;
+		margin-bottom: var(--espaco-6);
 	}
 	.topo p {
-		margin: 0.3rem 0 0;
-		color: var(--tinta-suave);
+		margin: var(--espaco-1) 0 0;
+		color: var(--cor-texto-suave);
 	}
 	.bloco {
-		padding: 1.1rem 1.25rem;
-		margin-bottom: 1rem;
-		max-width: 760px;
+		padding: var(--espaco-5) var(--espaco-6);
+		margin-bottom: var(--espaco-4);
+		max-width: var(--largura-leitura);
 	}
 	.titulo {
 		display: flex;
 		align-items: center;
-		gap: 0.75rem;
+		gap: var(--espaco-3);
 		justify-content: space-between;
-	}
-	h2 {
-		font-size: 1.15rem;
+		flex-wrap: wrap;
 	}
 	p,
 	ol {
-		color: var(--tinta-suave);
-		font-size: 0.92rem;
+		color: var(--cor-texto-suave);
 	}
 	ol {
-		padding-left: 1.2rem;
+		padding-left: var(--espaco-5);
 		display: grid;
-		gap: 0.35rem;
+		gap: var(--espaco-2);
 	}
 	code {
-		font-size: 0.85em;
-		background: var(--superficie-2);
-		padding: 0.05rem 0.35rem;
-		border-radius: 4px;
-		color: var(--tinta);
+		font-size: var(--texto-pequeno);
+		background: var(--cor-preenchimento-1);
+		padding: 1px var(--espaco-1);
+		border-radius: var(--raio-p);
+		color: var(--cor-texto);
+		overflow-wrap: anywhere;
+	}
+
+	@media (max-width: 760px) {
+		.bloco {
+			padding: var(--espaco-4);
+		}
 	}
 </style>

@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Vitrinista · Componentes</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<!-- As mesmas classes do app: o guia mostra o código real -->
+		<link rel="stylesheet" href="../src/app.css" />
+		<style>
+			/* Só o guia: força estados que o navegador não deixa congelar (hover, pressionado, foco).
+			   Espelham as regras de src/app.css — se mudar lá, muda aqui. */
+			.botao.e-hover {
+				border-color: var(--cor-borda-hover);
+			}
+			.botao.e-press {
+				border-color: var(--cor-borda-hover);
+				background: var(--cor-preenchimento-1);
+			}
+			.botao.primario.e-hover {
+				background: var(--cor-primaria-hover);
+				border-color: var(--cor-primaria-hover);
+			}
+			.botao.primario.e-press {
+				background: var(--cor-primaria-pressionada);
+				border-color: var(--cor-primaria-pressionada);
+			}
+			.botao.discreto.e-hover {
+				background: var(--cor-veu-hover);
+				color: var(--cor-texto);
+				border-color: transparent;
+			}
+			.botao.discreto.e-press {
+				background: var(--cor-veu-pressionado);
+				color: var(--cor-texto);
+				border-color: transparent;
+			}
+			.botao.perigo.e-hover,
+			.botao.perigo.e-press {
+				background: var(--cor-erro-acao-hover);
+				border-color: var(--cor-erro-acao-hover);
+			}
+			.e-foco {
+				outline: 2px solid var(--cor-foco);
+				outline-offset: 2px;
+			}
+			.campo input.e-hover {
+				border-color: var(--cor-borda-hover);
+			}
+			.campo input.e-ativo {
+				border-color: var(--cor-destaque);
+			}
+			.campo input.e-foco {
+				border-color: var(--cor-destaque);
+				outline-offset: 1px;
+			}
+			.menu-item {
+				display: flex;
+				align-items: center;
+				min-height: 38px;
+				padding: 0 var(--espaco-3);
+				border-radius: var(--raio-campo);
+				color: var(--cor-texto-suave);
+				font-weight: var(--peso-medio);
+				text-decoration: none;
+				white-space: nowrap;
+			}
+			.menu-item.e-hover {
+				background: var(--cor-veu-hover);
+				color: var(--cor-texto);
+			}
+			.menu-item.e-press {
+				background: var(--cor-veu-pressionado);
+				color: var(--cor-texto);
+			}
+			.menu-item.e-sel {
+				background: var(--cor-veu-selecionado);
+				color: var(--cor-texto);
+			}
+			.menu-item.e-off {
+				color: var(--cor-texto-desativado);
+			}
+			.cartao.e-hover {
+				border-color: var(--cor-borda-hover);
+			}
+
+			/* Layout do guia */
+			main {
+				max-width: var(--largura-conteudo);
+				margin: 0 auto;
+				padding: var(--espaco-12) var(--espaco-6);
+			}
+			.lead {
+				color: var(--cor-texto-suave);
+				max-width: var(--largura-leitura);
+				margin: var(--espaco-2) 0 0;
+			}
+			.secao {
+				display: grid;
+				grid-template-columns: 260px minmax(0, 1fr);
+				gap: var(--espaco-8);
+				margin-top: var(--espaco-12);
+				padding-top: var(--espaco-8);
+				border-top: 1px solid var(--cor-borda);
+			}
+			.legenda h2 {
+				margin-bottom: var(--espaco-2);
+			}
+			.legenda p {
+				color: var(--cor-texto-suave);
+				font-size: var(--texto-pequeno);
+				line-height: var(--linha-pequeno);
+				margin: 0 0 var(--espaco-2);
+			}
+			.legenda code {
+				font-size: var(--texto-legenda);
+			}
+			.exemplos {
+				display: flex;
+				flex-wrap: wrap;
+				gap: var(--espaco-3);
+				align-items: center;
+				margin-bottom: var(--espaco-6);
+			}
+			.rotulo-bloco {
+				font-size: var(--texto-legenda);
+				line-height: var(--linha-legenda);
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				font-weight: var(--peso-forte);
+				color: var(--cor-texto-suave);
+				margin: 0 0 var(--espaco-2);
+			}
+			.rolagem {
+				overflow-x: auto;
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				background: var(--cor-superficie);
+				border: 1px solid var(--cor-borda);
+				border-radius: var(--raio-cartao);
+			}
+			th,
+			td {
+				text-align: left;
+				padding: var(--espaco-3);
+				border-bottom: 1px solid var(--cor-divisoria);
+				vertical-align: middle;
+			}
+			th {
+				font-size: var(--texto-legenda);
+				line-height: var(--linha-legenda);
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				color: var(--cor-texto-suave);
+				font-weight: var(--peso-forte);
+				background: var(--cor-preenchimento-1);
+				white-space: nowrap;
+			}
+			tr:last-child td {
+				border-bottom: 0;
+			}
+			td.var {
+				font-weight: var(--peso-forte);
+				white-space: nowrap;
+			}
+			.na {
+				color: var(--cor-texto-desativado);
+				font-size: var(--texto-legenda);
+				line-height: var(--linha-legenda);
+			}
+			td .campo {
+				min-width: 170px;
+			}
+			.mini-post {
+				width: 220px;
+				overflow: hidden;
+			}
+			.mini-post .capa {
+				aspect-ratio: 4/5;
+				background: var(--cor-preenchimento-1);
+				position: relative;
+				display: grid;
+				place-items: center;
+				font-family: var(--fonte-titulo);
+				color: var(--cor-texto-suave);
+			}
+			.mini-post .pilula {
+				position: absolute;
+				top: var(--espaco-3);
+				left: var(--espaco-3);
+				padding: 2px var(--espaco-3);
+				border-radius: var(--raio-pilula);
+				font: var(--peso-forte) var(--texto-pequeno)/var(--linha-pequeno) var(--fonte);
+			}
+			.mini-post .corpo {
+				padding: var(--espaco-3) var(--espaco-4);
+				font-size: var(--texto-pequeno);
+				line-height: var(--linha-pequeno);
+			}
+			.p-normal {
+				background: var(--cor-veu-foto);
+				color: var(--cor-texto);
+			}
+			.p-bom {
+				background: var(--cor-destaque-fundo);
+				color: var(--cor-destaque-texto);
+			}
+			.p-forte {
+				background: var(--cor-destaque);
+				color: var(--cor-sobre-escuro);
+			}
+			.numero {
+				padding: var(--espaco-4);
+				display: grid;
+				gap: 2px;
+				min-width: 180px;
+			}
+			.numero span,
+			.numero small {
+				font-size: var(--texto-pequeno);
+				line-height: var(--linha-pequeno);
+				color: var(--cor-texto-suave);
+			}
+			.numero strong {
+				font: var(--peso-forte) var(--texto-numero)/var(--linha-numero) var(--fonte-titulo);
+			}
+			.indice td code {
+				font-size: var(--texto-legenda);
+			}
+			@media (max-width: 760px) {
+				.secao {
+					grid-template-columns: 1fr;
+					gap: var(--espaco-4);
+				}
+				main {
+					padding: var(--espaco-8) var(--espaco-4);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<h1>Componentes</h1>
+			<p class="lead">
+				Cada peça com a regra, exemplos e a matriz de estados. As peças usam as classes reais de
+				<code>src/app.css</code>; os estados hover/pressionado/foco são congelados só para o guia.
+				Fundamentos: <a href="guia-fundamentos.html">guia-fundamentos.html</a>.
+			</p>
+
+			<!-- ───────── ÍNDICE ───────── -->
+			<section class="secao">
+				<div class="legenda">
+					<h2>Índice</h2>
+					<p>Toda peça nova ou mudada entra aqui no mesmo PR.</p>
+				</div>
+				<div class="rolagem">
+					<table class="indice">
+						<tr>
+							<th>Peça</th>
+							<th>Estados em</th>
+							<th>Código</th>
+							<th>Status</th>
+						</tr>
+						<tr>
+							<td>Botão</td>
+							<td><a href="#botao">Botão › Estados</a></td>
+							<td><code>app.css .botao</code></td>
+							<td><span class="selo ok">pronto</span></td>
+						</tr>
+						<tr>
+							<td>Campo</td>
+							<td><a href="#campo">Campo › Estados</a></td>
+							<td><code>app.css .campo</code></td>
+							<td><span class="selo ok">pronto</span></td>
+						</tr>
+						<tr>
+							<td>Item do menu</td>
+							<td><a href="#menu">Menu › Estados</a></td>
+							<td><code>routes/+layout.svelte nav a</code></td>
+							<td><span class="selo ok">pronto</span></td>
+						</tr>
+						<tr>
+							<td>Selo</td>
+							<td><a href="#selo">Selo › Dados</a></td>
+							<td><code>app.css .selo</code></td>
+							<td><span class="selo ok">pronto</span></td>
+						</tr>
+						<tr>
+							<td>Aviso</td>
+							<td><a href="#aviso">Aviso › Dados</a></td>
+							<td><code>app.css .aviso</code></td>
+							<td><span class="selo ok">pronto</span></td>
+						</tr>
+						<tr>
+							<td>Cartão · post</td>
+							<td><a href="#cartao">Cartão › Estados</a></td>
+							<td><code>routes/radar .post</code></td>
+							<td><span class="selo ok">pronto</span></td>
+						</tr>
+						<tr>
+							<td>Cartão · número</td>
+							<td><a href="#cartao">Cartão › Dados</a></td>
+							<td><code>routes/radar .numero</code></td>
+							<td><span class="selo ok">pronto</span></td>
+						</tr>
+						<tr>
+							<td>Vazio</td>
+							<td><a href="#vazio">Vazio</a></td>
+							<td><code>app.css .vazio</code></td>
+							<td><span class="selo ok">pronto</span></td>
+						</tr>
+						<tr>
+							<td>Ícones</td>
+							<td>—</td>
+							<td>—</td>
+							<td><span class="selo alerta">set não escolhido</span></td>
+						</tr>
+						<tr>
+							<td>Diálogo, toast, upload de fotos, passo a passo</td>
+							<td>—</td>
+							<td>—</td>
+							<td><span class="selo">entra com o Estúdio</span></td>
+						</tr>
+					</table>
+				</div>
+			</section>
+
+			<!-- ───────── BOTÃO ───────── -->
+			<section class="secao" id="botao">
+				<div class="legenda">
+					<h2>Botão</h2>
+					<p><b>Primário</b>: a próxima coisa a fazer. Um por tela.</p>
+					<p><b>Padrão</b> (com borda): ações de apoio, como “Atualizar”.</p>
+					<p><b>Discreto</b> (sem borda): ações de linha que não podem competir, como “Pausar”.</p>
+					<p>
+						<b>Perigo</b>: só no passo de confirmar algo que não volta. O rótulo diz o que some
+						(“Remover @loja”).
+					</p>
+					<p>
+						Rótulo é sempre verbo. Carregando: <code>aria-busy="true"</code> mantém a largura e põe
+						um giro no meio.
+					</p>
+				</div>
+				<div>
+					<p class="rotulo-bloco">Em uso</p>
+					<div class="exemplos">
+						<button class="botao primario">Adicionar</button>
+						<button class="botao">Atualizar todas</button>
+						<button class="botao discreto">Pausar</button>
+						<button class="botao perigo">Remover @lojaflorescer</button>
+					</div>
+					<p class="rotulo-bloco">Estados</p>
+					<div class="rolagem">
+						<table>
+							<tr>
+								<th>Variante</th>
+								<th>Normal</th>
+								<th>Hover</th>
+								<th>Pressionado</th>
+								<th>Foco</th>
+								<th>Desativado</th>
+								<th>Carregando</th>
+								<th>Selecionado</th>
+							</tr>
+							<tr>
+								<td class="var">Primário</td>
+								<td><button class="botao primario">Adicionar</button></td>
+								<td><button class="botao primario e-hover">Adicionar</button></td>
+								<td><button class="botao primario e-press">Adicionar</button></td>
+								<td><button class="botao primario e-foco">Adicionar</button></td>
+								<td><button class="botao primario" disabled>Adicionar</button></td>
+								<td><button class="botao primario" aria-busy="true" disabled>Adicionar</button></td>
+								<td><span class="na">n/a: ação, não escolha</span></td>
+							</tr>
+							<tr>
+								<td class="var">Padrão</td>
+								<td><button class="botao">Atualizar</button></td>
+								<td><button class="botao e-hover">Atualizar</button></td>
+								<td><button class="botao e-press">Atualizar</button></td>
+								<td><button class="botao e-foco">Atualizar</button></td>
+								<td><button class="botao" disabled>Atualizar</button></td>
+								<td><button class="botao" aria-busy="true" disabled>Atualizar</button></td>
+								<td><span class="na">n/a</span></td>
+							</tr>
+							<tr>
+								<td class="var">Discreto</td>
+								<td><button class="botao discreto">Pausar</button></td>
+								<td><button class="botao discreto e-hover">Pausar</button></td>
+								<td><button class="botao discreto e-press">Pausar</button></td>
+								<td><button class="botao discreto e-foco">Pausar</button></td>
+								<td><button class="botao discreto" disabled>Pausar</button></td>
+								<td><span class="na">n/a: ação instantânea</span></td>
+								<td><span class="na">n/a</span></td>
+							</tr>
+							<tr>
+								<td class="var">Perigo</td>
+								<td><button class="botao perigo">Remover</button></td>
+								<td><button class="botao perigo e-hover">Remover</button></td>
+								<td><button class="botao perigo e-press">Remover</button></td>
+								<td><button class="botao perigo e-foco">Remover</button></td>
+								<td><span class="na">n/a: só existe ao confirmar</span></td>
+								<td><button class="botao perigo" aria-busy="true" disabled>Remover</button></td>
+								<td><span class="na">n/a</span></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</section>
+
+			<!-- ───────── CAMPO ───────── -->
+			<section class="secao" id="campo">
+				<div class="legenda">
+					<h2>Campo</h2>
+					<p>
+						Rótulo sempre visível em cima, nunca só placeholder. O placeholder mostra um exemplo
+						(“@lojaexemplo”), mais claro que o texto suave.
+					</p>
+					<p>
+						O campo de texto mostra a borda terracota ao clicar (é onde o cursor está); o anel só
+						aparece pelo teclado.
+					</p>
+					<p>Erro: borda vermelha + aviso de erro acima do formulário dizendo o que fazer.</p>
+				</div>
+				<div class="rolagem">
+					<table>
+						<tr>
+							<th>Variante</th>
+							<th>Normal</th>
+							<th>Hover</th>
+							<th>Ativo (clique)</th>
+							<th>Foco (teclado)</th>
+							<th>Desativado</th>
+							<th>Erro</th>
+						</tr>
+						<tr>
+							<td class="var">Texto</td>
+							<td>
+								<label class="campo">@ da loja<input placeholder="@lojaexemplo" /></label>
+							</td>
+							<td>
+								<label class="campo"
+									>@ da loja<input class="e-hover" placeholder="@lojaexemplo"
+								/></label>
+							</td>
+							<td>
+								<label class="campo">@ da loja<input class="e-ativo" value="@modabella" /></label>
+							</td>
+							<td>
+								<label class="campo">@ da loja<input class="e-foco" value="@modabella" /></label>
+							</td>
+							<td>
+								<label class="campo">@ da loja<input disabled value="@modabella" /></label>
+							</td>
+							<td>
+								<label class="campo">@ da loja<input aria-invalid="true" value="@@x" /></label>
+							</td>
+						</tr>
+						<tr>
+							<td class="var">Seleção</td>
+							<td>
+								<label class="campo"
+									>Período<select>
+										<option>Últimos 30 dias</option>
+									</select></label
+								>
+							</td>
+							<td>
+								<label class="campo"
+									>Período<select class="e-hover" style="border-color: var(--cor-borda-hover)">
+										<option>Últimos 30 dias</option>
+									</select></label
+								>
+							</td>
+							<td>
+								<label class="campo"
+									>Período<select style="border-color: var(--cor-destaque)">
+										<option>Últimos 30 dias</option>
+									</select></label
+								>
+							</td>
+							<td>
+								<label class="campo"
+									>Período<select class="e-foco" style="border-color: var(--cor-destaque)">
+										<option>Últimos 30 dias</option>
+									</select></label
+								>
+							</td>
+							<td>
+								<label class="campo"
+									>Período<select disabled>
+										<option>Últimos 30 dias</option>
+									</select></label
+								>
+							</td>
+							<td><span class="na">n/a: sempre tem valor válido</span></td>
+						</tr>
+					</table>
+				</div>
+			</section>
+
+			<!-- ───────── MENU ───────── -->
+			<section class="secao" id="menu">
+				<div class="legenda">
+					<h2>Item do menu</h2>
+					<p>
+						Família sem borda. Selecionado = véu de 9%, mais forte que o hover (5%). O peso da fonte
+						nunca muda.
+					</p>
+					<p>Desativado (“em breve”) some no celular para não ocupar espaço.</p>
+				</div>
+				<div class="rolagem">
+					<table>
+						<tr>
+							<th>Normal</th>
+							<th>Hover</th>
+							<th>Pressionado</th>
+							<th>Foco</th>
+							<th>Desativado</th>
+							<th>Selecionado</th>
+						</tr>
+						<tr>
+							<td><span class="menu-item">Referências</span></td>
+							<td><span class="menu-item e-hover">Referências</span></td>
+							<td><span class="menu-item e-press">Referências</span></td>
+							<td><span class="menu-item e-foco">Referências</span></td>
+							<td>
+								<span class="menu-item e-off">Estúdio&nbsp;<small>em breve</small></span>
+							</td>
+							<td><span class="menu-item e-sel">Radar</span></td>
+						</tr>
+					</table>
+				</div>
+			</section>
+
+			<!-- ───────── SELO ───────── -->
+			<section class="secao" id="selo">
+				<div class="legenda">
+					<h2>Selo</h2>
+					<p>
+						Só informa; não é clicável (por isso não tem hover). Uma ou duas palavras, minúsculas.
+					</p>
+				</div>
+				<div class="rolagem">
+					<table>
+						<tr>
+							<th>Neutro</th>
+							<th>Ok</th>
+							<th>Alerta</th>
+							<th>Erro</th>
+							<th>Destaque</th>
+							<th>Pausado</th>
+						</tr>
+						<tr>
+							<td><span class="selo">Carrossel</span></td>
+							<td><span class="selo ok">Conectado</span></td>
+							<td><span class="selo alerta">recente</span></td>
+							<td><span class="selo erro">Faltam chaves</span></td>
+							<td><span class="selo destaque">em alta</span></td>
+							<td><span class="selo">pausada</span></td>
+						</tr>
+					</table>
+				</div>
+			</section>
+
+			<!-- ───────── AVISO ───────── -->
+			<section class="secao" id="aviso">
+				<div class="legenda">
+					<h2>Aviso</h2>
+					<p>Mensagem em linha, acima do que ela fala. Erro diz o que fazer, não o código.</p>
+				</div>
+				<div style="display: grid; gap: var(--espaco-2)">
+					<p class="aviso ok">Pronto! @lojaflorescer adicionada com 36 posts.</p>
+					<p class="aviso alerta">
+						Modo <strong>dados de exemplo</strong>: os números são fictícios até o app da Meta ser
+						configurado.
+					</p>
+					<p class="aviso erro">
+						Não achamos @lojaxyz. Confira se a conta é comercial ou de criador.
+					</p>
+					<p class="aviso">Sem novidades: nenhuma referência postou desde ontem.</p>
+				</div>
+			</section>
+
+			<!-- ───────── CARTÃO ───────── -->
+			<section class="secao" id="cartao">
+				<div class="legenda">
+					<h2>Cartão</h2>
+					<p>Só borda, sem sombra. Cartão clicável escurece a borda no hover.</p>
+					<p>
+						<b>Post</b>: a foto manda. A pílula mostra quantas vezes o normal: neutra abaixo de
+						1,5x, terracota clara de 1,5x, terracota cheia de 3x.
+					</p>
+					<p><b>Número</b>: rótulo pequeno em cima, número em Fraunces.</p>
+				</div>
+				<div>
+					<p class="rotulo-bloco">Post · dados e hover</p>
+					<div class="exemplos" style="align-items: start">
+						<div class="cartao mini-post">
+							<div class="capa">Foto<span class="pilula p-normal">1,1x</span></div>
+							<div class="corpo"><b>@ateliecasual</b> · normal</div>
+						</div>
+						<div class="cartao mini-post">
+							<div class="capa">Carrossel<span class="pilula p-bom">2,0x</span></div>
+							<div class="corpo"><b>@lojaflorescer</b> · bom</div>
+						</div>
+						<div class="cartao mini-post e-hover">
+							<div class="capa">Reels<span class="pilula p-forte">4,2x</span></div>
+							<div class="corpo"><b>@modabella</b> · forte + hover</div>
+						</div>
+					</div>
+					<p class="rotulo-bloco">Número</p>
+					<div class="exemplos">
+						<div class="cartao numero"><span>Posts analisados</span><strong>36</strong></div>
+						<div class="cartao numero">
+							<span>Formato em alta</span><strong>Carrossel</strong
+							><small>mediana 2,1x o normal</small>
+						</div>
+						<div class="cartao numero"><span>Acima de 2x o normal</span><strong>0</strong></div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ───────── VAZIO ───────── -->
+			<section class="secao" id="vazio">
+				<div class="legenda">
+					<h2>Vazio</h2>
+					<p>
+						Diz por que está vazio e qual é o primeiro passo. Se houver um botão, ele é o primário
+						da tela.
+					</p>
+				</div>
+				<div class="cartao vazio">
+					<h2>Comece pelas referências</h2>
+					<p>
+						Adicione as lojas que você quer acompanhar e o Radar mostra os posts que mais deram
+						certo.
+					</p>
+					<a class="botao primario" href="#vazio">Adicionar referências</a>
+				</div>
+			</section>
+		</main>
+	</body>
+</html>

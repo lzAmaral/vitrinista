@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Vitrinista · Fundamentos</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="../src/tokens.css" />
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				background: var(--cor-fundo);
+				color: var(--cor-texto);
+				font: var(--peso-normal) var(--texto-corpo) / var(--linha-corpo) var(--fonte);
+				-webkit-font-smoothing: antialiased;
+			}
+			main {
+				max-width: var(--largura-conteudo);
+				margin: 0 auto;
+				padding: var(--espaco-12) var(--espaco-6);
+			}
+			h1,
+			h2,
+			h3 {
+				font-family: var(--fonte-titulo);
+				font-weight: var(--peso-forte);
+				margin: 0;
+				letter-spacing: -0.01em;
+			}
+			h1 {
+				font-size: var(--texto-titulo);
+				line-height: var(--linha-titulo);
+			}
+			h2 {
+				font-size: var(--texto-subtitulo);
+				line-height: var(--linha-subtitulo);
+				margin-bottom: var(--espaco-1);
+			}
+			section {
+				margin-top: var(--espaco-12);
+			}
+			.lead {
+				color: var(--cor-texto-suave);
+				margin: var(--espaco-2) 0 0;
+				max-width: var(--largura-leitura);
+			}
+			.nota {
+				color: var(--cor-texto-suave);
+				font-size: var(--texto-pequeno);
+				line-height: var(--linha-pequeno);
+				margin: 0 0 var(--espaco-4);
+				max-width: var(--largura-leitura);
+			}
+			.grade {
+				display: grid;
+				gap: var(--espaco-3);
+				grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+			}
+			.amostra {
+				background: var(--cor-superficie);
+				border: 1px solid var(--cor-borda);
+				border-radius: var(--raio-cartao);
+				overflow: hidden;
+			}
+			.amostra .cor {
+				height: 64px;
+				border-bottom: 1px solid var(--cor-divisoria);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-weight: var(--peso-forte);
+			}
+			.amostra .rotulo {
+				padding: var(--espaco-2) var(--espaco-3);
+				font-size: var(--texto-pequeno);
+				line-height: var(--linha-pequeno);
+			}
+			.amostra code {
+				font-size: var(--texto-legenda);
+				color: var(--cor-texto-suave);
+			}
+			.grupo {
+				font-size: var(--texto-legenda);
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				color: var(--cor-texto-suave);
+				margin: var(--espaco-6) 0 var(--espaco-2);
+				font-weight: var(--peso-forte);
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				background: var(--cor-superficie);
+				border: 1px solid var(--cor-borda);
+				border-radius: var(--raio-cartao);
+				overflow: hidden;
+			}
+			th,
+			td {
+				text-align: left;
+				padding: var(--espaco-3) var(--espaco-4);
+				border-bottom: 1px solid var(--cor-divisoria);
+				vertical-align: middle;
+			}
+			th {
+				font-size: var(--texto-legenda);
+				line-height: var(--linha-legenda);
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				color: var(--cor-texto-suave);
+				font-weight: var(--peso-forte);
+				background: var(--cor-preenchimento-1);
+			}
+			tr:last-child td {
+				border-bottom: 0;
+			}
+			td code {
+				font-size: var(--texto-legenda);
+				color: var(--cor-texto-suave);
+			}
+			.rolagem {
+				overflow-x: auto;
+			}
+			.linha-esp {
+				display: flex;
+				align-items: center;
+				gap: var(--espaco-3);
+			}
+			.barra {
+				height: 12px;
+				background: var(--cor-destaque);
+				border-radius: 2px;
+			}
+			.raios {
+				display: flex;
+				flex-wrap: wrap;
+				gap: var(--espaco-4);
+			}
+			.raio {
+				width: 96px;
+				height: 72px;
+				background: var(--cor-superficie);
+				border: 1px solid var(--cor-borda-hover);
+				display: grid;
+				place-items: center;
+				font-size: var(--texto-legenda);
+			}
+			.sombras {
+				display: flex;
+				flex-wrap: wrap;
+				gap: var(--espaco-6);
+				padding: var(--espaco-4) 0;
+			}
+			.sombras div {
+				width: 200px;
+				height: 96px;
+				background: var(--cor-superficie);
+				border-radius: var(--raio-cartao);
+				display: grid;
+				place-items: center;
+				font-size: var(--texto-pequeno);
+			}
+
+			/* Exemplos vivos das regras de interação (só para o guia) */
+			.ex {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: var(--espaco-2);
+				min-height: 36px;
+				padding: 0 var(--espaco-4);
+				border-radius: var(--raio-pilula);
+				font: var(--peso-medio) var(--texto-pequeno) / 1 var(--fonte);
+				white-space: nowrap;
+			}
+			.ex.borda {
+				background: var(--cor-superficie);
+				border: 1px solid var(--cor-borda);
+				color: var(--cor-texto);
+			}
+			.ex.borda.hover {
+				border-color: var(--cor-borda-hover);
+			}
+			.ex.borda.press {
+				border-color: var(--cor-borda-hover);
+				background: var(--cor-preenchimento-1);
+			}
+			.ex.borda.sel {
+				background: var(--cor-destaque-fundo);
+				border-color: var(--cor-destaque);
+				color: var(--cor-destaque-texto);
+			}
+			.ex.borda.off {
+				color: var(--cor-texto-desativado);
+			}
+			.ex.sem {
+				background: transparent;
+				border: 1px solid transparent;
+				color: var(--cor-texto-suave);
+				border-radius: var(--raio-campo);
+			}
+			.ex.sem.hover {
+				background: var(--cor-veu-hover);
+				color: var(--cor-texto);
+			}
+			.ex.sem.press {
+				background: var(--cor-veu-pressionado);
+				color: var(--cor-texto);
+			}
+			.ex.sem.sel {
+				background: var(--cor-veu-selecionado);
+				color: var(--cor-texto);
+			}
+			.ex.sem.off {
+				color: var(--cor-texto-desativado);
+			}
+			.ex.prim {
+				background: var(--cor-primaria);
+				color: var(--cor-sobre-escuro);
+				border: 1px solid var(--cor-primaria);
+			}
+			.ex.prim.hover {
+				background: var(--cor-primaria-hover);
+			}
+			.ex.prim.press {
+				background: var(--cor-primaria-pressionada);
+			}
+			.ex.prim.off {
+				background: var(--cor-preenchimento-2);
+				border-color: var(--cor-preenchimento-2);
+				color: var(--cor-texto-desativado);
+			}
+			.ex.foco {
+				outline: 2px solid var(--cor-foco);
+				outline-offset: 2px;
+			}
+			.giro {
+				width: 12px;
+				height: 12px;
+				border-radius: 50%;
+				border: 2px solid currentColor;
+				border-right-color: transparent;
+			}
+			.na {
+				color: var(--cor-texto-desativado);
+				font-size: var(--texto-pequeno);
+			}
+			.escrita li {
+				margin-bottom: var(--espaco-2);
+			}
+			.escrita b {
+				font-weight: var(--peso-forte);
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<h1>Fundamentos</h1>
+			<p class="lead">
+				Cores, tipos, espaços e regras de interação do Vitrinista. Uma decisão tomada aqui vale para
+				todas as telas. Fonte: <code>src/tokens.css</code>.
+			</p>
+
+			<!-- ───────────── COR ───────────── -->
+			<section>
+				<h2>Cor</h2>
+				<p class="nota">
+					Tokens com nome de papel, não de valor. Os números são o contraste contra o chão onde a
+					cor é usada (AA pede 4,5:1 para texto).
+				</p>
+
+				<p class="grupo">Chão e superfícies</p>
+				<div class="grade">
+					<div class="amostra">
+						<div class="cor" style="background: var(--cor-fundo)"></div>
+						<div class="rotulo">fundo<br /><code>--cor-fundo · #f7f4ef</code></div>
+					</div>
+					<div class="amostra">
+						<div class="cor" style="background: var(--cor-superficie)"></div>
+						<div class="rotulo">superfície<br /><code>--cor-superficie · #ffffff</code></div>
+					</div>
+					<div class="amostra">
+						<div class="cor" style="background: var(--cor-preenchimento-1)"></div>
+						<div class="rotulo">
+							preenchimento 1<br /><code>--cor-preenchimento-1 · #f0ebe3</code>
+						</div>
+					</div>
+					<div class="amostra">
+						<div class="cor" style="background: var(--cor-preenchimento-2)"></div>
+						<div class="rotulo">
+							preenchimento 2<br /><code>--cor-preenchimento-2 · #e8e1d6</code>
+						</div>
+					</div>
+				</div>
+
+				<p class="grupo">Texto</p>
+				<div class="grade">
+					<div class="amostra">
+						<div class="cor" style="color: var(--cor-texto)">Aa 15,6:1</div>
+						<div class="rotulo">texto<br /><code>--cor-texto · #1f1b16</code></div>
+					</div>
+					<div class="amostra">
+						<div class="cor" style="color: var(--cor-texto-suave)">Aa 5,4:1</div>
+						<div class="rotulo">texto suave<br /><code>--cor-texto-suave · #6b6259</code></div>
+					</div>
+					<div class="amostra">
+						<div class="cor" style="color: var(--cor-texto-placeholder)">Aa 3,6:1</div>
+						<div class="rotulo">
+							placeholder<br /><code>--cor-texto-placeholder · #8f857b</code>
+						</div>
+					</div>
+					<div class="amostra">
+						<div class="cor" style="color: var(--cor-texto-desativado)">Aa 2,6:1</div>
+						<div class="rotulo">desativado<br /><code>--cor-texto-desativado · #a8a097</code></div>
+					</div>
+					<div class="amostra">
+						<div
+							class="cor"
+							style="background: var(--cor-primaria); color: var(--cor-sobre-escuro)"
+						>
+							Aa 15,6:1
+						</div>
+						<div class="rotulo">sobre escuro<br /><code>--cor-sobre-escuro · #f7f4ef</code></div>
+					</div>
+				</div>
+
+				<p class="grupo">Linhas e véus</p>
+				<div class="grade">
+					<div class="amostra">
+						<div class="cor" style="border-bottom: 3px solid var(--cor-borda)"></div>
+						<div class="rotulo">borda<br /><code>--cor-borda · #e4ddd2</code></div>
+					</div>
+					<div class="amostra">
+						<div class="cor" style="border-bottom: 3px solid var(--cor-borda-hover)"></div>
+						<div class="rotulo">borda no hover<br /><code>--cor-borda-hover · #bdb2a5</code></div>
+					</div>
+					<div class="amostra">
+						<div class="cor" style="border-bottom: 3px solid var(--cor-divisoria)"></div>
+						<div class="rotulo">divisória<br /><code>--cor-divisoria · #eee8df</code></div>
+					</div>
+					<div class="amostra">
+						<div class="cor" style="background: var(--cor-veu-hover)"></div>
+						<div class="rotulo">véu hover · 5%<br /><code>--cor-veu-hover</code></div>
+					</div>
+					<div class="amostra">
+						<div class="cor" style="background: var(--cor-veu-selecionado)"></div>
+						<div class="rotulo">véu selecionado · 9%<br /><code>--cor-veu-selecionado</code></div>
+					</div>
+					<div class="amostra">
+						<div class="cor" style="background: var(--cor-veu-pressionado)"></div>
+						<div class="rotulo">véu pressionado · 13%<br /><code>--cor-veu-pressionado</code></div>
+					</div>
+				</div>
+
+				<p class="grupo">Ação principal e marca</p>
+				<div class="grade">
+					<div class="amostra">
+						<div class="cor" style="background: var(--cor-primaria)"></div>
+						<div class="rotulo">primária<br /><code>--cor-primaria · #1f1b16</code></div>
+					</div>
+					<div class="amostra">
+						<div class="cor" style="background: var(--cor-primaria-hover)"></div>
+						<div class="rotulo">primária hover<br /><code>#3a332b</code></div>
+					</div>
+					<div class="amostra">
+						<div class="cor" style="background: var(--cor-primaria-pressionada)"></div>
+						<div class="rotulo">primária pressionada<br /><code>#12100d</code></div>
+					</div>
+					<div class="amostra">
+						<div
+							class="cor"
+							style="background: var(--cor-destaque); color: var(--cor-sobre-escuro)"
+						>
+							4,2x
+						</div>
+						<div class="rotulo">
+							destaque (terracota)<br /><code>--cor-destaque · #b4532a</code>
+						</div>
+					</div>
+					<div class="amostra">
+						<div
+							class="cor"
+							style="background: var(--cor-destaque-fundo); color: var(--cor-destaque-texto)"
+						>
+							Aa 5,4:1
+						</div>
+						<div class="rotulo">destaque fundo + texto<br /><code>#f6e3d8 + #98431f</code></div>
+					</div>
+				</div>
+
+				<p class="grupo">Estados</p>
+				<div class="grade">
+					<div class="amostra">
+						<div class="cor" style="background: var(--cor-ok-fundo); color: var(--cor-ok-texto)">
+							Coletado 5,4:1
+						</div>
+						<div class="rotulo">ok<br /><code>--cor-ok-texto / -fundo</code></div>
+					</div>
+					<div class="amostra">
+						<div
+							class="cor"
+							style="background: var(--cor-alerta-fundo); color: var(--cor-alerta-texto)"
+						>
+							Atenção 5,2:1
+						</div>
+						<div class="rotulo">alerta<br /><code>--cor-alerta-texto / -fundo</code></div>
+					</div>
+					<div class="amostra">
+						<div
+							class="cor"
+							style="background: var(--cor-erro-fundo); color: var(--cor-erro-texto)"
+						>
+							Falhou 5,8:1
+						</div>
+						<div class="rotulo">erro<br /><code>--cor-erro-texto / -fundo</code></div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ───────────── TIPO ───────────── -->
+			<section>
+				<h2>Tipografia</h2>
+				<p class="nota">
+					Fraunces só em títulos e números grandes. Instrument Sans em todo o resto. Cada tamanho
+					tem a sua altura de linha.
+				</p>
+				<div class="rolagem">
+					<table>
+						<tr>
+							<th>Uso</th>
+							<th>Exemplo</th>
+							<th>Token</th>
+						</tr>
+						<tr>
+							<td>Título da página</td>
+							<td>
+								<span
+									style="
+										font: var(--peso-forte) var(--texto-titulo)/var(--linha-titulo)
+											var(--fonte-titulo);
+									"
+									>Radar</span
+								>
+							</td>
+							<td><code>--texto-titulo · 30/36</code></td>
+						</tr>
+						<tr>
+							<td>Número do resumo</td>
+							<td>
+								<span
+									style="
+										font: var(--peso-forte) var(--texto-numero)/var(--linha-numero)
+											var(--fonte-titulo);
+									"
+									>12,1 mil</span
+								>
+							</td>
+							<td><code>--texto-numero · 24/30</code></td>
+						</tr>
+						<tr>
+							<td>Subtítulo / cartão</td>
+							<td>
+								<span
+									style="
+										font: var(--peso-forte) var(--texto-subtitulo)/var(--linha-subtitulo)
+											var(--fonte-titulo);
+									"
+									>Vestido midi linho</span
+								>
+							</td>
+							<td><code>--texto-subtitulo · 18/24</code></td>
+						</tr>
+						<tr>
+							<td>Corpo no Estúdio</td>
+							<td>
+								<span style="font-size: var(--texto-corpo-g); line-height: var(--linha-corpo-g)"
+									>Escolha as fotos do produto</span
+								>
+							</td>
+							<td><code>--texto-corpo-g · 16/24</code></td>
+						</tr>
+						<tr>
+							<td>Corpo</td>
+							<td>Os posts das referências que mais deram certo</td>
+							<td><code>--texto-corpo · 15/22</code></td>
+						</tr>
+						<tr>
+							<td>Pequeno</td>
+							<td>
+								<span
+									style="
+										font-size: var(--texto-pequeno);
+										line-height: var(--linha-pequeno);
+										color: var(--cor-texto-suave);
+									"
+									>@lojaexemplo · 22 de nov.</span
+								>
+							</td>
+							<td><code>--texto-pequeno · 13/18</code></td>
+						</tr>
+						<tr>
+							<td>Legenda</td>
+							<td>
+								<span
+									style="
+										font-size: var(--texto-legenda);
+										line-height: var(--linha-legenda);
+										font-weight: var(--peso-forte);
+									"
+									>CARROSSEL · RECENTE</span
+								>
+							</td>
+							<td><code>--texto-legenda · 12/16</code></td>
+						</tr>
+					</table>
+				</div>
+			</section>
+
+			<!-- ───────────── ESPAÇO / RAIO / SOMBRA / MOVIMENTO ───────────── -->
+			<section>
+				<h2>Espaço</h2>
+				<p class="nota">Base de 4 px. Só estes oito valores.</p>
+				<div style="display: grid; gap: var(--espaco-2)">
+					<div class="linha-esp">
+						<code style="width: 150px; white-space: nowrap">--espaco-1 · 4</code>
+						<div class="barra" style="width: var(--espaco-1)"></div>
+					</div>
+					<div class="linha-esp">
+						<code style="width: 150px; white-space: nowrap">--espaco-2 · 8</code>
+						<div class="barra" style="width: var(--espaco-2)"></div>
+					</div>
+					<div class="linha-esp">
+						<code style="width: 150px; white-space: nowrap">--espaco-3 · 12</code>
+						<div class="barra" style="width: var(--espaco-3)"></div>
+					</div>
+					<div class="linha-esp">
+						<code style="width: 150px; white-space: nowrap">--espaco-4 · 16</code>
+						<div class="barra" style="width: var(--espaco-4)"></div>
+					</div>
+					<div class="linha-esp">
+						<code style="width: 150px; white-space: nowrap">--espaco-5 · 20</code>
+						<div class="barra" style="width: var(--espaco-5)"></div>
+					</div>
+					<div class="linha-esp">
+						<code style="width: 150px; white-space: nowrap">--espaco-6 · 24</code>
+						<div class="barra" style="width: var(--espaco-6)"></div>
+					</div>
+					<div class="linha-esp">
+						<code style="width: 150px; white-space: nowrap">--espaco-8 · 32</code>
+						<div class="barra" style="width: var(--espaco-8)"></div>
+					</div>
+					<div class="linha-esp">
+						<code style="width: 150px; white-space: nowrap">--espaco-12 · 48</code>
+						<div class="barra" style="width: var(--espaco-12)"></div>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<h2>Raio</h2>
+				<div class="raios">
+					<div class="raio" style="border-radius: var(--raio-p)">p · 6</div>
+					<div class="raio" style="border-radius: var(--raio-campo)">campo · 8</div>
+					<div class="raio" style="border-radius: var(--raio-cartao)">cartão · 14</div>
+					<div class="raio" style="border-radius: var(--raio-g)">g · 20</div>
+					<div class="raio" style="border-radius: var(--raio-pilula)">pílula</div>
+				</div>
+			</section>
+
+			<section>
+				<h2>Sombra</h2>
+				<p class="nota">
+					Só no que flutua por cima da página: menu, diálogo, toast. Cartões ficam só com borda.
+				</p>
+				<div class="sombras">
+					<div style="box-shadow: var(--sombra)">--sombra · menu, toast</div>
+					<div style="box-shadow: var(--sombra-forte)">--sombra-forte · diálogo</div>
+				</div>
+			</section>
+
+			<section>
+				<h2>Layout e movimento</h2>
+				<div class="rolagem">
+					<table>
+						<tr>
+							<th>Token</th>
+							<th>Valor</th>
+							<th>Para quê</th>
+						</tr>
+						<tr>
+							<td><code>--largura-menu</code></td>
+							<td>220 px</td>
+							<td>Menu lateral no computador</td>
+						</tr>
+						<tr>
+							<td><code>--largura-conteudo</code></td>
+							<td>1280 px</td>
+							<td>Largura máxima das telas</td>
+						</tr>
+						<tr>
+							<td><code>--largura-leitura</code></td>
+							<td>680 px</td>
+							<td>Formulários e textos longos</td>
+						</tr>
+						<tr>
+							<td><code>--alvo-toque</code></td>
+							<td>44 px</td>
+							<td>Altura mínima de tudo que se toca no celular</td>
+						</tr>
+						<tr>
+							<td>quebra celular</td>
+							<td>760 px</td>
+							<td>Menu vira barra no topo</td>
+						</tr>
+						<tr>
+							<td><code>--duracao-rapida</code></td>
+							<td>120 ms</td>
+							<td>Hover, pressionado, fechar</td>
+						</tr>
+						<tr>
+							<td><code>--duracao</code></td>
+							<td>200 ms</td>
+							<td>Abrir, aparecer (abrir é mais lento que fechar)</td>
+						</tr>
+						<tr>
+							<td><code>--curva</code></td>
+							<td>cubic-bezier(.2,0,0,1)</td>
+							<td>Uma curva para tudo; zera com “reduzir movimento”</td>
+						</tr>
+					</table>
+				</div>
+			</section>
+
+			<!-- ───────────── INTERAÇÃO ───────────── -->
+			<section>
+				<h2>Regras de interação</h2>
+				<p class="nota">
+					Escritas uma vez; botões, filtros, campos, cartões e menu seguem estas três famílias. O
+					foco só aparece pelo teclado (<code>:focus-visible</code>). Selecionar nunca muda o peso
+					da fonte. Carregando mantém o tamanho exato.
+				</p>
+				<div class="rolagem">
+					<table>
+						<tr>
+							<th>Família</th>
+							<th>Normal</th>
+							<th>Hover</th>
+							<th>Pressionado</th>
+							<th>Foco</th>
+							<th>Desativado</th>
+							<th>Carregando</th>
+							<th>Selecionado</th>
+						</tr>
+						<tr>
+							<td>
+								<b>Com borda</b><br /><span class="na"
+									>botão secundário, filtro, campo, cartão clicável</span
+								>
+							</td>
+							<td><span class="ex borda">Coletar</span></td>
+							<td><span class="ex borda hover">Coletar</span></td>
+							<td><span class="ex borda press">Coletar</span></td>
+							<td><span class="ex borda foco">Coletar</span></td>
+							<td><span class="ex borda off">Coletar</span></td>
+							<td>
+								<span class="ex borda"><span class="giro"></span>Coletando</span>
+							</td>
+							<td><span class="ex borda sel">30 dias</span></td>
+						</tr>
+						<tr>
+							<td>
+								<b>Sem borda</b><br /><span class="na"
+									>item do menu, botão discreto, linha de lista</span
+								>
+							</td>
+							<td><span class="ex sem">Referências</span></td>
+							<td><span class="ex sem hover">Referências</span></td>
+							<td><span class="ex sem press">Referências</span></td>
+							<td><span class="ex sem foco">Referências</span></td>
+							<td><span class="ex sem off">Estúdio</span></td>
+							<td><span class="na">—</span></td>
+							<td><span class="ex sem sel">Radar</span></td>
+						</tr>
+						<tr>
+							<td><b>Primária</b><br /><span class="na">uma por tela</span></td>
+							<td><span class="ex prim">Adicionar</span></td>
+							<td><span class="ex prim hover">Adicionar</span></td>
+							<td><span class="ex prim press">Adicionar</span></td>
+							<td><span class="ex prim foco">Adicionar</span></td>
+							<td><span class="ex prim off">Adicionar</span></td>
+							<td>
+								<span class="ex prim"><span class="giro"></span>Adicionando</span>
+							</td>
+							<td><span class="na">—</span></td>
+						</tr>
+					</table>
+				</div>
+				<p class="nota" style="margin-top: var(--espaco-3)">
+					Hover só escurece a borda (com borda) ou põe um véu de 5% (sem borda). Selecionado é mais
+					forte que hover: terracota nos filtros, véu de 9% no menu. Destrutivo (remover) pede
+					confirmação na própria linha; o botão de confirmar usa <code>--cor-erro-acao</code>.
+				</p>
+			</section>
+
+			<!-- ───────────── ESCRITA ───────────── -->
+			<section>
+				<h2>Como a gente escreve</h2>
+				<ul class="escrita">
+					<li>
+						<b>Curto e caloroso.</b> “Pronto! 36 posts novos.” em vez de “Operação concluída com
+						sucesso”.
+					</li>
+					<li>
+						<b>Verbo no botão.</b> “Adicionar referência”, “Coletar agora”, “Criar carrossel”. Nunca
+						“OK” ou “Enviar”.
+					</li>
+					<li><b>Números do Brasil.</b> 12,1 mil · 4,2x · R$ 89,90 · 22 de nov. · 22/11.</li>
+					<li>
+						<b>Erro diz o que fazer.</b> “Não achamos @loja. Confira se a conta é comercial.” em vez
+						de “Erro 110”.
+					</li>
+					<li>
+						<b>Estúdio sem jargão.</b> “posts que mais chamaram atenção” em vez de “engajamento” ou
+						“mediana”.
+					</li>
+					<li>
+						<b>Vazio convida.</b> Toda tela vazia diz por que está vazia e qual é o primeiro passo.
+					</li>
+				</ul>
+			</section>
+		</main>
+	</body>
+</html>

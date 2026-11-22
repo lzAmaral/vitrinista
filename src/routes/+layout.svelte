@@ -50,7 +50,7 @@
 
 	<main>
 		{#if data.integracoes.coletor === 'exemplo'}
-			<p class="faixa-exemplo">
+			<p class="aviso alerta faixa-exemplo">
 				Modo <strong>dados de exemplo</strong>: os números são fictícios até o app da Meta ser
 				configurado. <a href={resolve('/configuracoes')}>Ver configuração</a>
 			</p>
@@ -62,74 +62,81 @@
 <style>
 	.app {
 		display: grid;
-		grid-template-columns: 220px 1fr;
+		grid-template-columns: var(--largura-menu) 1fr;
 		min-height: 100dvh;
 	}
 	.lateral {
 		position: sticky;
 		top: 0;
 		height: 100dvh;
-		padding: 1.5rem 1rem;
-		border-right: 1px solid var(--borda);
+		padding: var(--espaco-6) var(--espaco-4);
+		border-right: 1px solid var(--cor-borda);
 		display: flex;
 		flex-direction: column;
-		gap: 2rem;
+		gap: var(--espaco-8);
 	}
 	.marca {
 		text-decoration: none;
 		display: grid;
-		padding-inline: 0.6rem;
+		padding-inline: var(--espaco-3);
 	}
 	.logo {
 		font-family: var(--fonte-titulo);
-		font-size: 1.4rem;
-		font-weight: 600;
+		font-size: var(--texto-numero);
+		line-height: var(--linha-numero);
+		font-weight: var(--peso-forte);
 	}
 	.loja {
-		font-size: 0.8rem;
-		color: var(--tinta-suave);
+		font-size: var(--texto-pequeno);
+		line-height: var(--linha-pequeno);
+		color: var(--cor-texto-suave);
 	}
 	nav {
 		display: grid;
-		gap: 0.15rem;
+		gap: 2px;
 	}
+	/* Família "sem borda": véu no hover, véu mais forte no selecionado, sem mudar o peso */
 	nav a,
 	.em-breve {
-		padding: 0.5rem 0.6rem;
-		border-radius: var(--raio-p);
+		display: flex;
+		align-items: center;
+		gap: var(--espaco-2);
+		min-height: 38px;
+		padding: 0 var(--espaco-3);
+		border-radius: var(--raio-campo);
 		text-decoration: none;
-		color: var(--tinta-suave);
-		font-weight: 500;
+		color: var(--cor-texto-suave);
+		font-weight: var(--peso-medio);
+		transition:
+			background var(--duracao-rapida) var(--curva),
+			color var(--duracao-rapida) var(--curva);
 	}
 	nav a:hover {
-		background: var(--superficie-2);
-		color: var(--tinta);
+		background: var(--cor-veu-hover);
+		color: var(--cor-texto);
+	}
+	nav a:active {
+		background: var(--cor-veu-pressionado);
 	}
 	nav a[aria-current='page'] {
-		background: var(--superficie);
-		color: var(--tinta);
-		box-shadow: var(--sombra);
+		background: var(--cor-veu-selecionado);
+		color: var(--cor-texto);
 	}
 	.em-breve {
-		opacity: 0.55;
+		color: var(--cor-texto-desativado);
 		cursor: default;
 	}
 	.em-breve small {
-		font-size: 0.7rem;
-		margin-left: 0.25rem;
+		font-size: var(--texto-legenda);
+		font-weight: var(--peso-normal);
 	}
 	main {
-		padding: 2rem clamp(1rem, 3vw, 2.5rem) 4rem;
+		padding: var(--espaco-8) clamp(var(--espaco-4), 3vw, 40px) var(--espaco-12);
 		min-width: 0;
-		max-width: 1280px;
+		max-width: var(--largura-conteudo);
 	}
 	.faixa-exemplo {
-		margin: 0 0 1.5rem;
-		padding: 0.6rem 1rem;
-		border-radius: var(--raio-p);
-		background: var(--alerta-suave);
-		color: var(--alerta);
-		font-size: 0.85rem;
+		margin-bottom: var(--espaco-6);
 	}
 
 	@media (max-width: 760px) {
@@ -139,24 +146,33 @@
 		.lateral {
 			position: static;
 			height: auto;
-			flex-direction: row;
-			align-items: center;
-			flex-wrap: wrap;
-			gap: 0.75rem;
-			padding: 0.75rem 1rem;
+			gap: var(--espaco-2);
+			padding: var(--espaco-3) var(--espaco-4) var(--espaco-2);
 			border-right: 0;
-			border-bottom: 1px solid var(--borda);
+			border-bottom: 1px solid var(--cor-borda);
+		}
+		.marca {
+			grid-auto-flow: column;
+			justify-content: start;
+			align-items: baseline;
+			gap: var(--espaco-2);
 		}
 		nav {
 			display: flex;
 			overflow-x: auto;
-			width: 100%;
+			scrollbar-width: none;
+			margin-inline: calc(-1 * var(--espaco-4));
+			padding-inline: var(--espaco-4);
+		}
+		nav a {
+			min-height: var(--alvo-toque);
+			flex: none;
 		}
 		.em-breve {
 			display: none;
 		}
 		main {
-			padding-top: 1.25rem;
+			padding-top: var(--espaco-5);
 		}
 	}
 </style>

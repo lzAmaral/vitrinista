@@ -1,28 +1,9 @@
-:root {
-	--fundo: #f7f4ef;
-	--superficie: #ffffff;
-	--superficie-2: #f0ebe3;
-	--tinta: #1f1b16;
-	--tinta-suave: #6b6259;
-	--borda: #e4ddd2;
-	--destaque: #b4532a;
-	--destaque-suave: #f6e3d8;
-	--ok: #2f6b3f;
-	--ok-suave: #e1efe3;
-	--alerta: #8a5a00;
-	--alerta-suave: #fbefd2;
-	--erro: #a3261b;
-	--erro-suave: #f8dfdc;
+@import './tokens.css';
 
-	--raio: 14px;
-	--raio-p: 8px;
-	--sombra: 0 1px 2px rgb(31 27 22 / 0.06), 0 4px 16px rgb(31 27 22 / 0.05);
-
-	--fonte: 'Instrument Sans', system-ui, sans-serif;
-	--fonte-titulo: 'Fraunces', Georgia, serif;
-
-	color-scheme: light;
-}
+/*
+ * Componentes compartilhados. Regras e matrizes de estado: design/guia-componentes.html
+ * Só tokens aqui — nenhum hex solto.
+ */
 
 * {
 	box-sizing: border-box;
@@ -31,11 +12,11 @@
 html,
 body {
 	margin: 0;
-	background: var(--fundo);
-	color: var(--tinta);
+	background: var(--cor-fundo);
+	color: var(--cor-texto);
 	font-family: var(--fonte);
-	font-size: 15px;
-	line-height: 1.5;
+	font-size: var(--texto-corpo);
+	line-height: var(--linha-corpo);
 	-webkit-font-smoothing: antialiased;
 }
 
@@ -43,10 +24,18 @@ h1,
 h2,
 h3 {
 	font-family: var(--fonte-titulo);
-	font-weight: 600;
+	font-weight: var(--peso-forte);
 	letter-spacing: -0.01em;
-	line-height: 1.2;
 	margin: 0;
+}
+h1 {
+	font-size: var(--texto-titulo);
+	line-height: var(--linha-titulo);
+}
+h2,
+h3 {
+	font-size: var(--texto-subtitulo);
+	line-height: var(--linha-subtitulo);
 }
 
 a {
@@ -61,130 +50,277 @@ textarea {
 	color: inherit;
 }
 
+/* Foco só pelo teclado, igual em tudo */
+:focus-visible {
+	outline: 2px solid var(--cor-foco);
+	outline-offset: 2px;
+}
+
+/* ── Botão ──────────────────────────────────────────────
+ * Família "com borda" (padrão), "primária" e "sem borda" (discreto).
+ * Carregando: aria-busy="true" — o rótulo fica invisível e o giro aparece por cima,
+ * então o botão mantém a largura exata.
+ */
 .botao {
+	position: relative;
 	display: inline-flex;
 	align-items: center;
-	gap: 0.4rem;
-	border: 1px solid var(--borda);
-	background: var(--superficie);
-	border-radius: 999px;
-	padding: 0.5rem 1rem;
-	font-weight: 500;
+	justify-content: center;
+	gap: var(--espaco-2);
+	min-height: 38px;
+	padding: 0 var(--espaco-4);
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio-pilula);
+	background: var(--cor-superficie);
+	color: var(--cor-texto);
+	font-weight: var(--peso-medio);
+	line-height: 1;
 	cursor: pointer;
 	text-decoration: none;
 	white-space: nowrap;
 	transition:
-		background 0.15s,
-		border-color 0.15s;
+		background var(--duracao-rapida) var(--curva),
+		border-color var(--duracao-rapida) var(--curva),
+		color var(--duracao-rapida) var(--curva);
 }
 .botao:hover {
-	border-color: var(--tinta-suave);
+	border-color: var(--cor-borda-hover);
+}
+.botao:active {
+	border-color: var(--cor-borda-hover);
+	background: var(--cor-preenchimento-1);
 }
 .botao:disabled {
-	opacity: 0.55;
-	cursor: progress;
+	color: var(--cor-texto-desativado);
+	border-color: var(--cor-borda);
+	background: var(--cor-superficie);
+	cursor: not-allowed;
 }
+
 .botao.primario {
-	background: var(--tinta);
-	color: var(--fundo);
-	border-color: var(--tinta);
+	background: var(--cor-primaria);
+	border-color: var(--cor-primaria);
+	color: var(--cor-sobre-escuro);
 }
 .botao.primario:hover {
-	background: #3a332b;
+	background: var(--cor-primaria-hover);
+	border-color: var(--cor-primaria-hover);
 }
+.botao.primario:active {
+	background: var(--cor-primaria-pressionada);
+	border-color: var(--cor-primaria-pressionada);
+}
+.botao.primario:disabled {
+	background: var(--cor-preenchimento-2);
+	border-color: var(--cor-preenchimento-2);
+	color: var(--cor-texto-desativado);
+}
+
 .botao.discreto {
 	border-color: transparent;
 	background: transparent;
-	color: var(--tinta-suave);
-	padding-inline: 0.6rem;
+	color: var(--cor-texto-suave);
+	padding-inline: var(--espaco-3);
 }
 .botao.discreto:hover {
-	color: var(--erro);
+	background: var(--cor-veu-hover);
+	color: var(--cor-texto);
+}
+.botao.discreto:active {
+	background: var(--cor-veu-pressionado);
+	color: var(--cor-texto);
+}
+.botao.discreto:disabled {
+	background: transparent;
+	color: var(--cor-texto-desativado);
 }
 
+.botao.perigo {
+	background: var(--cor-erro-acao);
+	border-color: var(--cor-erro-acao);
+	color: var(--cor-sobre-escuro);
+}
+.botao.perigo:hover,
+.botao.perigo:active {
+	background: var(--cor-erro-acao-hover);
+	border-color: var(--cor-erro-acao-hover);
+}
+
+/* Carregando: mantém o tamanho; disabled junto evita clique duplo sem mudar a cor */
+.botao[aria-busy='true'] {
+	color: transparent;
+	cursor: progress;
+}
+.botao[aria-busy='true']::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	border: 2px solid var(--cor-texto-suave);
+	border-right-color: transparent;
+	animation: girar 0.7s linear infinite;
+}
+.botao.primario[aria-busy='true'] {
+	background: var(--cor-primaria);
+	border-color: var(--cor-primaria);
+}
+.botao.primario[aria-busy='true']::after,
+.botao.perigo[aria-busy='true']::after {
+	border-color: var(--cor-sobre-escuro);
+	border-right-color: transparent;
+}
+@keyframes girar {
+	to {
+		transform: rotate(1turn);
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.botao[aria-busy='true']::after {
+		animation-duration: 2s;
+	}
+}
+
+/* ── Campo ─────────────────────────────────────────── */
 .campo {
 	display: grid;
-	gap: 0.3rem;
-	font-size: 0.85rem;
-	color: var(--tinta-suave);
+	gap: var(--espaco-1);
+	font-size: var(--texto-pequeno);
+	line-height: var(--linha-pequeno);
+	font-weight: var(--peso-medio);
+	color: var(--cor-texto-suave);
 }
 .campo input,
 .campo select {
-	border: 1px solid var(--borda);
-	border-radius: var(--raio-p);
-	background: var(--superficie);
-	padding: 0.55rem 0.7rem;
-	font-size: 0.95rem;
-	color: var(--tinta);
+	min-height: 38px;
 	min-width: 0;
+	padding: 0 var(--espaco-3);
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio-campo);
+	background: var(--cor-superficie);
+	color: var(--cor-texto);
+	font-size: var(--texto-corpo);
+	font-weight: var(--peso-normal);
+	transition: border-color var(--duracao-rapida) var(--curva);
 }
+.campo input::placeholder {
+	color: var(--cor-texto-placeholder);
+}
+.campo input:hover,
+.campo select:hover {
+	border-color: var(--cor-borda-hover);
+}
+/* Campo de texto recebe digitação também pelo clique: a borda mostra onde está o cursor */
 .campo input:focus,
 .campo select:focus {
-	outline: 2px solid var(--destaque);
+	border-color: var(--cor-destaque);
+	outline: none;
+}
+.campo input:focus-visible,
+.campo select:focus-visible {
+	outline: 2px solid var(--cor-foco);
 	outline-offset: 1px;
 }
-
-.cartao {
-	background: var(--superficie);
-	border: 1px solid var(--borda);
-	border-radius: var(--raio);
-	box-shadow: var(--sombra);
+.campo input:disabled,
+.campo select:disabled {
+	background: var(--cor-preenchimento-1);
+	color: var(--cor-texto-desativado);
+	cursor: not-allowed;
+}
+.campo input[aria-invalid='true'] {
+	border-color: var(--cor-erro-texto);
+}
+.campo .ajuda {
+	font-weight: var(--peso-normal);
 }
 
+/* ── Cartão: só borda; sombra é para o que flutua ──── */
+.cartao {
+	background: var(--cor-superficie);
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio-cartao);
+}
+
+/* ── Selo (só informa, não é clicável) ─────────────── */
 .selo {
 	display: inline-flex;
 	align-items: center;
-	gap: 0.3rem;
-	font-size: 0.75rem;
-	font-weight: 600;
-	padding: 0.15rem 0.55rem;
-	border-radius: 999px;
-	background: var(--superficie-2);
-	color: var(--tinta-suave);
+	gap: var(--espaco-1);
+	padding: 2px var(--espaco-2);
+	border-radius: var(--raio-pilula);
+	background: var(--cor-preenchimento-1);
+	color: var(--cor-texto-suave);
+	font-size: var(--texto-legenda);
+	line-height: var(--linha-legenda);
+	font-weight: var(--peso-forte);
 }
 .selo.ok {
-	background: var(--ok-suave);
-	color: var(--ok);
+	background: var(--cor-ok-fundo);
+	color: var(--cor-ok-texto);
 }
 .selo.alerta {
-	background: var(--alerta-suave);
-	color: var(--alerta);
+	background: var(--cor-alerta-fundo);
+	color: var(--cor-alerta-texto);
 }
 .selo.erro {
-	background: var(--erro-suave);
-	color: var(--erro);
+	background: var(--cor-erro-fundo);
+	color: var(--cor-erro-texto);
 }
 .selo.destaque {
-	background: var(--destaque-suave);
-	color: var(--destaque);
+	background: var(--cor-destaque-fundo);
+	color: var(--cor-destaque-texto);
 }
 
+/* ── Aviso (mensagem em linha) ─────────────────────── */
 .aviso {
-	border-radius: var(--raio-p);
-	padding: 0.75rem 1rem;
-	font-size: 0.9rem;
+	margin: 0;
+	padding: var(--espaco-3) var(--espaco-4);
+	border-radius: var(--raio-campo);
+	font-size: var(--texto-pequeno);
+	line-height: var(--linha-pequeno);
+	background: var(--cor-preenchimento-1);
+	color: var(--cor-texto);
 }
 .aviso.alerta {
-	background: var(--alerta-suave);
-	color: var(--alerta);
+	background: var(--cor-alerta-fundo);
+	color: var(--cor-alerta-texto);
 }
 .aviso.erro {
-	background: var(--erro-suave);
-	color: var(--erro);
+	background: var(--cor-erro-fundo);
+	color: var(--cor-erro-texto);
 }
 .aviso.ok {
-	background: var(--ok-suave);
-	color: var(--ok);
+	background: var(--cor-ok-fundo);
+	color: var(--cor-ok-texto);
 }
 
+/* ── Vazio: diz por que está vazio e o primeiro passo ── */
 .vazio {
 	text-align: center;
-	padding: 3rem 1.5rem;
-	color: var(--tinta-suave);
+	padding: var(--espaco-12) var(--espaco-6);
+	color: var(--cor-texto-suave);
 }
 .vazio h2 {
-	color: var(--tinta);
-	margin-bottom: 0.5rem;
+	color: var(--cor-texto);
+	margin-bottom: var(--espaco-2);
+}
+.vazio p {
+	max-width: 46ch;
+	margin: 0 auto;
+}
+.vazio .botao {
+	margin-top: var(--espaco-4);
+}
+
+/* Celular: tudo que se toca tem pelo menos 44 px */
+@media (max-width: 760px) {
+	.botao,
+	.campo input,
+	.campo select {
+		min-height: var(--alvo-toque);
+	}
 }
 
 .sr-only {
