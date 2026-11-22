@@ -1,5 +1,7 @@
 # Vitrinista
 
+[![CI](https://github.com/lzAmaral/vitrinista/actions/workflows/ci.yml/badge.svg)](https://github.com/lzAmaral/vitrinista/actions/workflows/ci.yml)
+
 Assistente de conteúdo para lojas de moda: acompanha o Instagram de lojas de referência,
 mostra o que deu mais certo e (nas próximas fases) usa IA para explicar o porquê e ajudar a criar
 posts e carrosséis. Primeira loja: **Ana Modas** (@anamodascerquilho).
