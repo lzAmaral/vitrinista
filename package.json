@@ -23,7 +23,8 @@
 		"db:migrate": "drizzle-kit migrate",
 		"db:studio": "drizzle-kit studio",
 		"coletar": "tsx --env-file=.env scripts/coletar.ts",
-		"meta:configurar": "tsx --env-file=.env scripts/meta-configurar.ts"
+		"meta:configurar": "tsx --env-file=.env scripts/meta-configurar.ts",
+		"agendar": "tsx scripts/agendar.ts"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",

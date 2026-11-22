@@ -14,14 +14,15 @@ cp .env.example .env      # já vem em modo COLETOR=exemplo (dados fictícios)
 npm run dev               # http://localhost:5173 — o banco é criado e migrado sozinho
 ```
 
-| Comando                              | O que faz                                                |
-| ------------------------------------ | -------------------------------------------------------- |
-| `npm run dev`                        | servidor de desenvolvimento                              |
-| `npm run coletar`                    | atualiza todas as referências (agendar no cron, ex.: 6h) |
-| `npm run meta:configurar -- <token>` | configura o acesso à Meta (veja abaixo)                  |
-| `npm test`                           | testes unitários                                         |
-| `npm run check` / `npm run lint`     | tipos / estilo                                           |
-| `npm run db:generate`                | gera migração depois de mudar `schema.ts`                |
+| Comando                              | O que faz                                                            |
+| ------------------------------------ | -------------------------------------------------------------------- |
+| `npm run dev`                        | servidor de desenvolvimento                                          |
+| `npm run coletar`                    | atualiza todas as referências (agendar no cron, ex.: 6h)             |
+| `npm run agendar -- [HH:MM]`         | agenda a coleta diária no macOS (padrão 06:00); `remover` / `status` |
+| `npm run meta:configurar -- <token>` | configura o acesso à Meta (veja abaixo)                              |
+| `npm test`                           | testes unitários                                                     |
+| `npm run check` / `npm run lint`     | tipos / estilo                                                       |
+| `npm run db:generate`                | gera migração depois de mudar `schema.ts`                            |
 
 ## Arquitetura
 

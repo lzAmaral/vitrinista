@@ -5,9 +5,11 @@
 import { coletarLoja, criarColetor } from '../src/lib/server/coleta';
 import { criarDb, migrar } from '../src/lib/server/db/client';
 import { lojas } from '../src/lib/server/db/schema';
+import { garantirLojaPadrao } from '../src/lib/server/loja';
 
 const db = criarDb(process.env.DATABASE_URL ?? 'file:local.db');
 await migrar(db);
+await garantirLojaPadrao(db);
 
 const coletor = criarColetor({
 	COLETOR: process.env.COLETOR === 'meta' ? 'meta' : 'exemplo',
@@ -16,6 +18,7 @@ const coletor = criarColetor({
 	META_GRAPH_VERSION: process.env.META_GRAPH_VERSION || 'v27.0'
 });
 
+console.log(`[${new Date().toISOString()}] coleta iniciada`);
 let falhou = false;
 for (const loja of await db.select().from(lojas)) {
 	console.log(`\n${loja.nome} (fonte: ${coletor.fonte})`);
