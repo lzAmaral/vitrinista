@@ -33,8 +33,8 @@
 	</div>
 	{#if data.referencias.length > 0}
 		<form method="POST" action="?/coletarTodas" use:enhance={marcar('todas')}>
-			<button class="botao" disabled={enviando !== null}>
-				{enviando === 'todas' ? 'Atualizando…' : 'Atualizar todas'}
+			<button class="botao" disabled={enviando !== null} aria-busy={enviando === 'todas'}>
+				Atualizar todas
 			</button>
 		</form>
 	{/if}
@@ -70,8 +70,8 @@
 			value={valores?.etiquetas ?? ''}
 		/>
 	</label>
-	<button class="botao primario" disabled={enviando !== null}>
-		{enviando === 'adicionar' ? 'Adicionando…' : 'Adicionar'}
+	<button class="botao primario" disabled={enviando !== null} aria-busy={enviando === 'adicionar'}>
+		Adicionar
 	</button>
 	<p class="dica">
 		A API do Instagram só lê contas <strong>comerciais ou de criador</strong> — quase toda loja é.
@@ -119,8 +119,12 @@
 				<div class="acoes">
 					<form method="POST" action="?/coletar" use:enhance={marcar(`coletar:${ref.id}`)}>
 						<input type="hidden" name="id" value={ref.id} />
-						<button class="botao" disabled={enviando !== null}>
-							{enviando === `coletar:${ref.id}` ? 'Atualizando…' : 'Atualizar'}
+						<button
+							class="botao"
+							disabled={enviando !== null}
+							aria-busy={enviando === `coletar:${ref.id}`}
+						>
+							Atualizar
 						</button>
 					</form>
 					<form method="POST" action="?/alternar" use:enhance={marcar(`alternar:${ref.id}`)}>
@@ -132,8 +136,12 @@
 					{#if confirmarRemocao === ref.id}
 						<form method="POST" action="?/remover" use:enhance={marcar(`remover:${ref.id}`)}>
 							<input type="hidden" name="id" value={ref.id} />
-							<button class="botao discreto perigo" disabled={enviando !== null}>
-								Confirmar remoção
+							<button
+								class="botao perigo"
+								disabled={enviando !== null}
+								aria-busy={enviando === `remover:${ref.id}`}
+							>
+								Remover @{ref.handle}
 							</button>
 						</form>
 						<button class="botao discreto" onclick={() => (confirmarRemocao = null)}>
@@ -155,53 +163,57 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: end;
-		gap: 1rem;
-		margin-bottom: 1.5rem;
+		gap: var(--espaco-4);
+		margin-bottom: var(--espaco-6);
 		flex-wrap: wrap;
 	}
 	.topo p {
-		margin: 0.3rem 0 0;
-		color: var(--tinta-suave);
+		margin: var(--espaco-1) 0 0;
+		color: var(--cor-texto-suave);
 	}
 	.aviso {
-		margin: 0 0 1rem;
+		margin-bottom: var(--espaco-4);
 	}
 	.nova {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr auto;
 		align-items: end;
-		gap: 0.75rem;
-		padding: 1rem;
-		margin-bottom: 2rem;
+		gap: var(--espaco-3);
+		padding: var(--espaco-4);
+		margin-bottom: var(--espaco-8);
 	}
 	.dica {
 		grid-column: 1 / -1;
 		margin: 0;
-		font-size: 0.8rem;
-		color: var(--tinta-suave);
+		font-size: var(--texto-pequeno);
+		line-height: var(--linha-pequeno);
+		color: var(--cor-texto-suave);
 	}
 	.lista {
 		list-style: none;
 		padding: 0;
 		margin: 0;
 		display: grid;
-		gap: 0.75rem;
+		gap: var(--espaco-3);
 	}
 	.lista li {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		gap: 1rem;
-		padding: 0.9rem 1rem;
+		gap: var(--espaco-4);
+		padding: var(--espaco-4);
 		flex-wrap: wrap;
 	}
-	.inativa {
+	.inativa .identidade {
 		opacity: 0.6;
 	}
 	.identidade {
 		display: flex;
-		gap: 0.85rem;
+		gap: var(--espaco-3);
 		align-items: flex-start;
+		min-width: 0;
+	}
+	.identidade > div {
 		min-width: 0;
 	}
 	.identidade img,
@@ -215,14 +227,14 @@
 	.avatar {
 		display: grid;
 		place-items: center;
-		background: var(--destaque-suave);
-		color: var(--destaque);
+		background: var(--cor-destaque-fundo);
+		color: var(--cor-destaque-texto);
 		font-family: var(--fonte-titulo);
-		font-weight: 600;
-		font-size: 1.1rem;
+		font-weight: var(--peso-forte);
+		font-size: var(--texto-subtitulo);
 	}
 	.handle {
-		font-weight: 600;
+		font-weight: var(--peso-forte);
 		text-decoration: none;
 	}
 	.handle:hover {
@@ -231,30 +243,40 @@
 	.meta,
 	.etiquetas,
 	.erro-linha {
-		margin: 0.15rem 0 0;
-		font-size: 0.82rem;
-		color: var(--tinta-suave);
+		margin: 2px 0 0;
+		font-size: var(--texto-pequeno);
+		line-height: var(--linha-pequeno);
+		color: var(--cor-texto-suave);
 	}
 	.etiquetas {
 		display: flex;
-		gap: 0.3rem;
+		gap: var(--espaco-1);
 		flex-wrap: wrap;
 	}
+	.etiquetas:empty {
+		display: none;
+	}
 	.erro-linha {
-		color: var(--erro);
+		color: var(--cor-erro-texto);
 	}
 	.acoes {
 		display: flex;
 		align-items: center;
-		gap: 0.25rem;
-	}
-	.perigo {
-		color: var(--erro);
+		gap: var(--espaco-1);
+		flex-wrap: wrap;
 	}
 
 	@media (max-width: 760px) {
 		.nova {
 			grid-template-columns: 1fr;
+		}
+		.lista li {
+			align-items: stretch;
+			flex-direction: column;
+		}
+		.acoes {
+			padding-top: var(--espaco-3);
+			border-top: 1px solid var(--cor-divisoria);
 		}
 	}
 </style>

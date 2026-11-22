@@ -1,0 +1,118 @@
+/*
+ * Vitrinista · fundações (tokens por papel)
+ * Guia visual: design/guia-fundamentos.html
+ * Regra: componentes e telas só usam estes tokens — nada de hex solto.
+ */
+:root {
+	/* ── Cor · chão e superfícies ───────────────────────── */
+	--cor-fundo: #f7f4ef; /* chão da página (creme) */
+	--cor-superficie: #ffffff; /* cartões, painéis, campos */
+	--cor-preenchimento-1: #f0ebe3; /* botão secundário, áreas internas, selo neutro */
+	--cor-preenchimento-2: #e8e1d6; /* um passo acima (pressionado / trilho) */
+
+	/* ── Cor · texto ────────────────────────────────────── */
+	--cor-texto: #1f1b16; /* 15,6:1 no fundo */
+	--cor-texto-suave: #6b6259; /* 5,4:1 no fundo · legendas, metadados */
+	--cor-texto-placeholder: #8f857b; /* mais claro que o suave */
+	--cor-texto-desativado: #a8a097;
+	--cor-sobre-escuro: #f7f4ef; /* texto em botão primário, toast */
+	--cor-sobre-escuro-suave: #c9bfb3;
+
+	/* ── Cor · linhas ───────────────────────────────────── */
+	--cor-borda: #e4ddd2; /* cartões e campos */
+	--cor-borda-hover: #bdb2a5; /* hover de peças com borda */
+	--cor-divisoria: #eee8df; /* entre linhas de lista, mais leve que a borda */
+
+	/* ── Cor · véus para peças sem borda (funcionam sobre qualquer chão) ── */
+	--cor-veu-hover: rgb(31 27 22 / 0.05);
+	--cor-veu-selecionado: rgb(31 27 22 / 0.09);
+	--cor-veu-pressionado: rgb(31 27 22 / 0.13);
+	--cor-sobreposicao: rgb(31 27 22 / 0.45); /* atrás de diálogos */
+	--cor-veu-foto: rgb(255 255 255 / 0.92); /* selo sobre foto */
+
+	/* ── Cor · ação principal (uma por tela) ────────────── */
+	--cor-primaria: #1f1b16;
+	--cor-primaria-hover: #3a332b;
+	--cor-primaria-pressionada: #12100d;
+
+	/* ── Cor · destaque da marca (terracota) ────────────── */
+	--cor-destaque: #b4532a; /* 5,0:1 no branco · ícones, números, pílula de destaque */
+	--cor-destaque-fundo: #f6e3d8;
+	--cor-destaque-texto: #98431f; /* texto sobre destaque-fundo (5,4:1) */
+	--cor-foco: #b4532a; /* anel de foco do teclado */
+
+	/* ── Cor · estados ──────────────────────────────────── */
+	--cor-ok-texto: #2f6b3f;
+	--cor-ok-fundo: #e1efe3;
+	--cor-alerta-texto: #8a5a00;
+	--cor-alerta-fundo: #fbefd2;
+	--cor-erro-texto: #a3261b;
+	--cor-erro-fundo: #f8dfdc;
+	--cor-erro-acao: #a3261b; /* botão destrutivo */
+	--cor-erro-acao-hover: #861d14;
+
+	/* ── Sombra · só no que flutua (menus, diálogos, toasts) ── */
+	--sombra: 0 1px 2px rgb(31 27 22 / 0.06), 0 4px 16px rgb(31 27 22 / 0.06);
+	--sombra-forte: 0 2px 6px rgb(31 27 22 / 0.08), 0 16px 40px rgb(31 27 22 / 0.14);
+
+	/* ── Tipografia ─────────────────────────────────────── */
+	--fonte: 'Instrument Sans', system-ui, sans-serif;
+	--fonte-titulo: 'Fraunces', Georgia, serif;
+
+	--texto-legenda: 12px; /* selos, rótulos de métrica */
+	--linha-legenda: 16px;
+	--texto-pequeno: 13px; /* metadados, ajuda de campo */
+	--linha-pequeno: 18px;
+	--texto-corpo: 15px; /* computador */
+	--linha-corpo: 22px;
+	--texto-corpo-g: 16px; /* Estúdio / celular */
+	--linha-corpo-g: 24px;
+	--texto-subtitulo: 18px; /* Fraunces · título de cartão e seção */
+	--linha-subtitulo: 24px;
+	--texto-numero: 24px; /* Fraunces · números do resumo */
+	--linha-numero: 30px;
+	--texto-titulo: 30px; /* Fraunces · título da página */
+	--linha-titulo: 36px;
+
+	--peso-normal: 400;
+	--peso-medio: 500;
+	--peso-forte: 600;
+
+	/* ── Espaço · base 4 px (só os valores usados) ──────── */
+	--espaco-1: 4px;
+	--espaco-2: 8px;
+	--espaco-3: 12px;
+	--espaco-4: 16px;
+	--espaco-5: 20px;
+	--espaco-6: 24px;
+	--espaco-8: 32px;
+	--espaco-12: 48px;
+
+	/* ── Raio ───────────────────────────────────────────── */
+	--raio-p: 6px; /* miniaturas, código */
+	--raio-campo: 8px; /* campos, avisos */
+	--raio-cartao: 14px; /* cartões, fotos */
+	--raio-g: 20px; /* diálogos, folha do celular */
+	--raio-pilula: 999px; /* botões, selos, filtros */
+
+	/* ── Layout ─────────────────────────────────────────── */
+	--largura-menu: 220px;
+	--largura-conteudo: 1280px;
+	--largura-leitura: 680px; /* formulários e textos longos */
+	--alvo-toque: 44px; /* mínimo no celular */
+	/* quebra para celular: 760px (media query não aceita var) */
+
+	/* ── Movimento · confirmar e transicionar, nunca enfeitar ── */
+	--duracao-rapida: 120ms; /* hover, pressionado, fechar */
+	--duracao: 200ms; /* abrir, aparecer */
+	--curva: cubic-bezier(0.2, 0, 0, 1);
+
+	color-scheme: light;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--duracao-rapida: 0ms;
+		--duracao: 0ms;
+	}
+}

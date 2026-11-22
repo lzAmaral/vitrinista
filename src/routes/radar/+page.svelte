@@ -144,14 +144,17 @@
 							<dt>Coment.</dt>
 							<dd>{compacto(item.comentarios)}</dd>
 						</div>
-						{#if item.visualizacoes != null}<div>
+						{#if item.tipo === 'VIDEO' && item.visualizacoes != null}
+							<div>
 								<dt>Views</dt>
 								<dd>{compacto(item.visualizacoes)}</dd>
-							</div>{/if}
-						<div>
-							<dt>Engaj.</dt>
-							<dd>{porcentagem(item.engajamento)}</dd>
-						</div>
+							</div>
+						{:else}
+							<div>
+								<dt>Engaj.</dt>
+								<dd>{porcentagem(item.engajamento)}</dd>
+							</div>
+						{/if}
 					</dl>
 				</div>
 			</li>
@@ -161,44 +164,44 @@
 
 <style>
 	.topo {
-		margin-bottom: 1.25rem;
+		margin-bottom: var(--espaco-5);
 	}
 	.topo p {
-		margin: 0.3rem 0 0;
-		color: var(--tinta-suave);
+		margin: var(--espaco-1) 0 0;
+		color: var(--cor-texto-suave);
 	}
 	.filtros {
 		display: flex;
-		gap: 0.75rem;
+		gap: var(--espaco-3);
 		flex-wrap: wrap;
-		margin-bottom: 1.5rem;
+		margin-bottom: var(--espaco-6);
 	}
 	.filtros .campo {
 		min-width: 150px;
-	}
-	.vazio .botao {
-		margin-top: 0.75rem;
+		flex: 0 1 auto;
 	}
 	.resumo {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-		gap: 0.75rem;
-		margin-bottom: 1.5rem;
+		gap: var(--espaco-3);
+		margin-bottom: var(--espaco-6);
 	}
 	.numero {
-		padding: 0.9rem 1rem;
+		padding: var(--espaco-4);
 		display: grid;
-		gap: 0.1rem;
+		gap: 2px;
 	}
 	.numero span,
 	.numero small {
-		font-size: 0.8rem;
-		color: var(--tinta-suave);
+		font-size: var(--texto-pequeno);
+		line-height: var(--linha-pequeno);
+		color: var(--cor-texto-suave);
 	}
 	.numero strong {
 		font-family: var(--fonte-titulo);
-		font-size: 1.6rem;
-		font-weight: 600;
+		font-size: var(--texto-numero);
+		line-height: var(--linha-numero);
+		font-weight: var(--peso-forte);
 	}
 	.grade {
 		list-style: none;
@@ -206,18 +209,26 @@
 		margin: 0;
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-		gap: 1rem;
+		gap: var(--espaco-4);
 	}
+	/* Cartão com borda: o hover só escurece a borda */
 	.post {
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
+		transition: border-color var(--duracao-rapida) var(--curva);
+	}
+	.post:hover {
+		border-color: var(--cor-borda-hover);
 	}
 	.capa {
 		position: relative;
 		display: block;
 		aspect-ratio: 4 / 5;
-		background: var(--superficie-2);
+		background: var(--cor-preenchimento-1);
+	}
+	.capa:focus-visible {
+		outline-offset: -2px;
 	}
 	.capa img {
 		width: 100%;
@@ -231,54 +242,65 @@
 		display: grid;
 		place-items: center;
 		font-family: var(--fonte-titulo);
-		color: var(--tinta-suave);
-		font-size: 1.1rem;
+		font-size: var(--texto-subtitulo);
+		color: var(--cor-texto-suave);
 	}
 	.pilula {
 		position: absolute;
-		top: 0.6rem;
-		left: 0.6rem;
-		padding: 0.2rem 0.6rem;
-		border-radius: 999px;
-		background: rgb(255 255 255 / 0.92);
-		font-weight: 600;
-		font-size: 0.9rem;
+		top: var(--espaco-3);
+		left: var(--espaco-3);
+		padding: 2px var(--espaco-3);
+		border-radius: var(--raio-pilula);
+		background: var(--cor-veu-foto);
+		color: var(--cor-texto);
+		font-size: var(--texto-pequeno);
+		line-height: var(--linha-pequeno);
+		font-weight: var(--peso-forte);
 		font-variant-numeric: tabular-nums;
 	}
 	.pilula.bom {
-		background: var(--destaque-suave);
-		color: var(--destaque);
+		background: var(--cor-destaque-fundo);
+		color: var(--cor-destaque-texto);
 	}
 	.pilula.forte {
-		background: var(--destaque);
-		color: #fff;
+		background: var(--cor-destaque);
+		color: var(--cor-sobre-escuro);
 	}
 	.corpo {
-		padding: 0.8rem 0.9rem 0.9rem;
+		padding: var(--espaco-3) var(--espaco-4) var(--espaco-4);
 		display: grid;
-		gap: 0.45rem;
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--espaco-2);
 	}
 	.linha-topo {
 		display: flex;
 		justify-content: space-between;
-		gap: 0.5rem;
+		gap: var(--espaco-2);
 		margin: 0;
-		font-size: 0.88rem;
+		font-size: var(--texto-pequeno);
+		line-height: var(--linha-pequeno);
+	}
+	.linha-topo strong {
+		font-weight: var(--peso-forte);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	.linha-topo span {
-		color: var(--tinta-suave);
+		color: var(--cor-texto-suave);
 		white-space: nowrap;
 	}
 	.selos {
 		display: flex;
-		gap: 0.3rem;
+		gap: var(--espaco-1);
 		flex-wrap: wrap;
 		margin: 0;
 	}
 	.legenda {
 		margin: 0;
-		font-size: 0.85rem;
-		color: var(--tinta-suave);
+		font-size: var(--texto-pequeno);
+		line-height: var(--linha-pequeno);
+		color: var(--cor-texto-suave);
 		display: -webkit-box;
 		-webkit-line-clamp: 3;
 		line-clamp: 3;
@@ -286,18 +308,64 @@
 		overflow: hidden;
 	}
 	.metricas {
-		display: flex;
-		gap: 0.9rem;
-		margin: 0.2rem 0 0;
-		font-size: 0.8rem;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: var(--espaco-2);
+		margin: var(--espaco-1) 0 0;
+		padding-top: var(--espaco-3);
+		border-top: 1px solid var(--cor-divisoria);
+		font-size: var(--texto-pequeno);
+		line-height: var(--linha-pequeno);
 	}
 	.metricas dt {
-		color: var(--tinta-suave);
-		font-size: 0.72rem;
+		color: var(--cor-texto-suave);
+		font-size: var(--texto-legenda);
+		line-height: var(--linha-legenda);
 	}
 	.metricas dd {
 		margin: 0;
-		font-weight: 600;
+		font-weight: var(--peso-forte);
 		font-variant-numeric: tabular-nums;
+	}
+
+	@media (max-width: 760px) {
+		.filtros {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+		}
+		.filtros .campo {
+			min-width: 0;
+		}
+		.grade {
+			grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+			gap: var(--espaco-3);
+		}
+		.corpo {
+			padding: var(--espaco-3);
+		}
+		.linha-topo {
+			flex-direction: column;
+			gap: 0;
+		}
+		.metricas {
+			grid-template-columns: repeat(3, auto);
+			justify-content: space-between;
+			gap: var(--espaco-1);
+		}
+		.metricas dd {
+			font-size: var(--texto-legenda);
+			line-height: var(--linha-legenda);
+		}
+		.resumo {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: var(--espaco-2);
+		}
+		.numero {
+			padding: var(--espaco-3);
+		}
+		.numero strong {
+			font-size: var(--texto-subtitulo);
+			line-height: var(--linha-subtitulo);
+		}
 	}
 </style>

@@ -29,6 +29,8 @@ npm run dev               # http://localhost:5173 — o banco é criado e migrad
 ```
 src/
 ├── env.ts                      variáveis de ambiente validadas
+├── tokens.css                  fundamentos do design (cores, tipos, espaços)
+├── app.css                     componentes compartilhados (botão, campo, selo…)
 ├── hooks.server.ts             migra o banco ao iniciar e resolve a loja atual
 ├── lib/
 │   ├── radar/destaque.ts       nota de destaque (puro, testado)
@@ -42,7 +44,8 @@ src/
 │       ├── radar.ts            ranking por destaque com filtros
 │       └── loja.ts             loja atual (hoje fixa; vira sessão quando for SaaS)
 └── routes/  radar · referencias · configuracoes
-scripts/     coletar.ts · meta-configurar.ts
+scripts/     coletar.ts · meta-configurar.ts · agendar.ts
+design/      guias do design system (abrir no navegador) — brief em DESIGN.md
 drizzle/     migrações versionadas
 ```
 
